@@ -174,10 +174,7 @@ namespace LibHid
         /// <returns>Returns if it wass succesfull to unregister.</returns>
         public bool UnregisterHandle()
         {
-            if (this.handle != null)
-            {
-                return Win32Usb.UnregisterForUsbEvents(this.handle);
-            }
+            return this.handle != null && Win32Usb.UnregisterForUsbEvents(this.handle);
         }
 
         /// <summary>

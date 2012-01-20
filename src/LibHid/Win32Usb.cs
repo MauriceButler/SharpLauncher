@@ -67,7 +67,7 @@ namespace LibHid
             /// <summary>
             /// 
             /// </summary>
-            public int Reserved;
+            public ulong Reserved;
         }
 		/// <summary>
 		/// Provides the capabilities of a HID device

@@ -6,7 +6,9 @@ using Microsoft.Win32.SafeHandles;
 
 namespace LibHid
 {
-	#region Custom exception
+    using System.Diagnostics;
+
+    #region Custom exception
 	/// <summary>
 	/// Generic HID device exception
 	/// </summary>
@@ -44,6 +46,11 @@ namespace LibHid
 	/// </summary>
     public abstract class HIDDevice : Win32Usb, IDisposable
     {
+
+        [DllImport("kernel32.dll", SetLastError = true, CallingConvention = CallingConvention.Winapi)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        public static extern bool IsWow64Process([In] IntPtr hProcess, [Out] out bool lpSystemInfo);
+
 		#region Privates variables
 		/// <summary>Filestream we can use to read/write from</summary>
         private FileStream m_oFile;
@@ -231,8 +238,11 @@ namespace LibHid
 			if (!SetupDiGetDeviceInterfaceDetail(hInfoSet, ref oInterface, IntPtr.Zero, 0, ref nRequiredSize, IntPtr.Zero))
 			{
 				DeviceInterfaceDetailData oDetail = new DeviceInterfaceDetailData();
-				oDetail.Size = 5;	// hardcoded to 5! Sorry, but this works and trying more future proof versions by setting the size to the struct sizeof failed miserably. If you manage to sort it, mail me! Thx
-				if (SetupDiGetDeviceInterfaceDetail(hInfoSet, ref oInterface, ref oDetail, nRequiredSize, ref nRequiredSize, IntPtr.Zero))
+			    bool is64BitProcess;
+                IsWow64Process(Process.GetCurrentProcess().Handle, out is64BitProcess);
+
+                oDetail.Size = (IntPtr.Size == 8 || (IntPtr.Size == 4 && is64BitProcess)) ? 8 : 5;
+                if (SetupDiGetDeviceInterfaceDetail(hInfoSet, ref oInterface, ref oDetail, nRequiredSize, ref nRequiredSize, IntPtr.Zero))
 				{
 					return oDetail.DevicePath;
 				}

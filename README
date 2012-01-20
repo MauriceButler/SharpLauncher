@@ -1,0 +1,15 @@
+I currently have one of these DreamCheeky USB Rocket Launchers setup on my desk at work. At the time I purchased this device, the best .NET open source project for controlling the DreamCheeky rocket launcher was a project called Sharp Launcher. http://code.google.com/p/sharplauncher/
+
+However, once my work machine was upgraded to Windows 7 64 bit, I had not been able to enjoy the device as the latest version of Sharp Launcher (1.3), does not work under a 64 bit operating system.
+
+After some Googling and finding no solution, only a number of people asking the same questions, I decided to jump in and fix it.
+
+Now I want to point out that I have tried to get in contact with the original developer to supply him with the changes and have got no response. I have also looked at contributing to the code.google project but it is not actually setup as a source repository, just has a zip of the code for download.
+
+My alternative is to post the source here and hopefully someone stumbles across it who knows how to contact this guy.
+
+I take no credit for the original code just the few minor tweaks I have made to make it work in a 64 bit environment. I have also not made any attempt to clean up the code, remove any warnings, test it on more than 1 or 2 systems, or anything else as this was purely an effort to get this existing software to work under 64 bit.
+
+Original work: http://code.google.com/p/sharplauncher/
+
+My write up of my changes: http://mauricebutler.wordpress.com/2011/07/12/sharp-launcher-for-dreamcheeky-usb-rocket-launcher-working-on-windows-7-x64/
